@@ -47,15 +47,19 @@ export function resultRings(label: string, axis?: { up: string; down: string } |
   const placed: { x: number; y: number }[] = [];
   /** Same radius, nudged around the ring (alternating sides, same half) until clear of the others. */
   function place(r: number, angle: number) {
-    const at = (a: number) => ({ x: r * Math.sin(a), y: -r * Math.cos(a) });
     const clear = (p: { x: number; y: number }) => placed.every((q) => Math.hypot(p.x - q.x, p.y - q.y) >= 18);
-    let best = at(angle);
-    if (r > 4) {
-      const step = 18 / r;
-      for (let k = 1; k <= 12 && !clear(best); k++) {
+    let best = { x: r * Math.sin(angle), y: -r * Math.cos(angle) };
+    if (!clear(best)) {
+      // Near the centre there is no room to step along the ring: fan out on a
+      // small circle instead (a marker is bigger than that distance anyway).
+      const rr = Math.max(r, 18);
+      const at = (a: number) => ({ x: rr * Math.sin(a), y: -rr * Math.cos(a) });
+      const step = 18 / rr;
+      best = at(angle);
+      for (let k = 1; k <= 14 && !clear(best); k++) {
         const a = angle + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * step;
-        // Stay on the same side of the horizontal, so up still means up.
-        if (Math.cos(a) * Math.cos(angle) < 0) continue;
+        // Stay on the same side of the horizontal, so up still means up (the centre has no side).
+        if (r > 18 && Math.cos(a) * Math.cos(angle) < 0) continue;
         best = at(a);
       }
     }

@@ -262,7 +262,7 @@ The dial's index is the one non-circular mark: a 3px ink bar at twelve o'clock t
 
 ### Tap pad and drift chart (Steady)
 - **Tap pad:** a solid ink disc, min(66vw, 38dvh, 340px), its label in ground; it flashes to the accent on each tap. Eight 14px progress dots below fill with ink.
-- **Drift chart:** one column per beat on a 1.5px ink line; each tap is an ink dot on a stem, above the line for early and below for late (half a beat reaches the edge); a missed beat is a dashed ring on the line.
+- **Drift chart:** one column per beat on a 1.5px ink line; each tap is an ink dot on a stem, above the line for early and below for late (a quarter beat reaches the edge); a missed beat is a dashed ring on the line.
 
 ### Result Rings (signature)
 - **Character:** the same diagram in every game: target at the centre, each answer at its true distance.

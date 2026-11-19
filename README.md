@@ -4,6 +4,8 @@
 
 Each game is a Zurich-style concert poster: flat inks, one heavy grotesk, circles as the only figures. It installs like an app, **works fully offline**, needs no account and sends nothing anywhere.
 
+![Nearly on a desktop: the masthead "Nearly" on the left, six game posters on the right (Tint in red, Glide in blue, Hum in yellow, Keys in black and white, Pulse in black, Steady in red)](docs/screenshots/hub-desktop.png)
+
 ## The games
 
 | Game | Kind | You get | You make it with | Scored by |
@@ -16,6 +18,47 @@ Each game is a Zurich-style concert poster: flat inks, one heavy grotesk, circle
 | **Steady** | Timing | a beat, two bars, then silence | your taps for the next two bars | average miss per beat (5 points at 45 ms), with the drift note by note |
 
 Every game is five rounds of up to 10 points: 10 for exact, 5 at the game's half-way error, about 1 at three times that. The result rings show the same thing as a picture: the target is the centre, every ring is two points less, and each answer lands in the direction of its miss (higher/sharper/faster up). Best totals stay on the device.
+
+## How it plays
+
+Every game runs the same way: the target, then your attempt, then the reveal. Each answer lands on the result rings at its real distance from the target.
+
+<table>
+  <tr>
+    <td width="33%" align="center"><img src="docs/screenshots/tint-show.png" width="240" alt="Tint: the whole screen is the crimson target colour, with the word Look and a big countdown 3"></td>
+    <td width="33%" align="center"><img src="docs/screenshots/tint-mix.png" width="240" alt="Tint on a phone: the screen shows the colour you are mixing, with hue, saturation and brightness strips at the bottom"></td>
+    <td width="33%" align="center"><img src="docs/screenshots/tint-summary.png" width="240" alt="Tint summary: 39.8 of 50, five colour pairs with their hex codes and points, and the five answers as coloured dots on the result rings"></td>
+  </tr>
+  <tr>
+    <td><b>Look.</b> Tint shows a colour for three seconds, edge to edge.</td>
+    <td><b>Mix it.</b> On a phone, three strips; on a desktop, three concentric rings you turn.</td>
+    <td><b>Five rounds.</b> Each answer sits on the rings at its colour difference from the target.</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/glide-dial.png" width="240" alt="Glide: on a blue screen, Find it, and a large tick ring with a play button in its centre"></td>
+    <td align="center"><img src="docs/screenshots/keys-play.png" width="240" alt="Keys: three stacked piano octaves, C3 to C5, with G4 pressed in red"></td>
+    <td align="center"><img src="docs/screenshots/keys-reveal.png" width="240" alt="Keys reveal: 0.1 points, 13 semitones too low; the target key blue and your key red, with replay buttons for both"></td>
+  </tr>
+  <tr>
+    <td><b>Glide.</b> Turn the ring until your tone is the one you heard.</td>
+    <td><b>Keys.</b> A recorded grand piano, three octaves; try keys as often as you like.</td>
+    <td><b>The reveal</b> shows your key against the target's, and plays both again.</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/pulse-intro.png" width="240" alt="Pulse intro on black: the rule, and a sound picker with Click, Wood (selected), Beep and Claves"></td>
+    <td align="center"><img src="docs/screenshots/steady-drift.png" width="240" alt="Steady reveal: 7.6 points, 25 ms off on average, slowing down; a drift chart with eight taps sinking further below the line"></td>
+    <td align="center"><img src="docs/screenshots/hub-phone.png" width="240" alt="The hub on a phone: Nearly set huge, and the Tint poster filling most of the screen"></td>
+  </tr>
+  <tr>
+    <td><b>Pulse</b> and <b>Steady</b> let you pick the metronome sound.</td>
+    <td><b>Steady</b> charts every tap: early above the line, late below, so drifting shows at a glance.</td>
+    <td><b>The hub</b> on a phone: one poster per game.</td>
+  </tr>
+</table>
+
+![Tint's reveal on a desktop: 6.8 points, too light; the result rings on the left, the target purple and your slightly lighter purple as two tall fields on the right](docs/screenshots/tint-reveal-desktop.png)
+
+<sub>Screenshots of the real app, captured in a test browser (the answers were entered by a script).</sub>
 
 Pulse and Steady let you pick the click: the four metronome sounds from Tactus (click, wood, beep, claves).
 

@@ -25,7 +25,7 @@ function driftChart(r: Taps): SVGSVGElement {
   const W = 320;
   const H = 120;
   const mid = H / 2;
-  const scale = (H / 2 - 12) / (r.period / 2); // half a beat off reaches the edge
+  const scale = (H / 2 - 12) / (r.period / 4); // a quarter beat off reaches the edge (more is clamped)
   const col = (k: number) => 20 + (k * (W - 40)) / (BEATS - 1);
   const parts = [
     `<line class="drift-line" x1="0" y1="${mid}" x2="${W}" y2="${mid}"/>`,
