@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.deploy/
+
+# Machine and hosting details stay local (never published)
+LOCAL.md
+deploy.sh
+.env.deploy
+.env.deploy.*
+.env
+.env.*
+*.local.md
+.impeccable/config.local.json
+
+wasm/pitch/target/
+
+# local browser automation and impeccable session artifacts
+.playwright-mcp/
+.impeccable/review/
+.impeccable/live/
+.impeccable/questions/
+.impeccable/mocks/
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

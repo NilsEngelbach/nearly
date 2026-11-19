@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Nearly",
+  "short_name": "Nearly",
+  "description": "Games of almost: see it, hear it, lose it, then make it again. Works offline.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2f2ee",
+  "theme_color": "#f2f2ee",
+  "categories": ["games", "music", "entertainment"],
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/pwa/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/pwa/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

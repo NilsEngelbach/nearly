@@ -1,0 +1,712 @@
+/* Nearly: a wall of Zurich concert posters. Flat offset inks on poster paper,
+   one heavy grotesk set flush left, circles as the only figures, a six-column
+   grid that stays faintly visible. Nothing is boxed: no cards, outlines, radii
+   or shadows; hierarchy comes from scale, weight and position. */
+
+:root {
+  --paper: #f2f2ee;
+  --black: #111111;
+  --red: #cf2b21;
+  --blue: #1f3fbf;
+  --yellow: #f2c200;
+
+  --ground: var(--paper);
+  --ink: var(--black);
+  --accent: var(--red);
+
+  --font: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gutter: 16px;
+  --gap: 8px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+}
+
+[data-ink='red'] { --ground: var(--red); --ink: var(--paper); --accent: var(--yellow); }
+[data-ink='blue'] { --ground: var(--blue); --ink: var(--paper); --accent: var(--yellow); }
+[data-ink='yellow'] { --ground: var(--yellow); --ink: var(--black); --accent: var(--red); }
+[data-ink='black'] { --ground: var(--black); --ink: var(--paper); --accent: var(--red); }
+[data-ink='paper'] { --ground: var(--paper); --ink: var(--black); --accent: var(--red); }
+.play[data-on='dark'] { --ink: var(--black); }
+.play[data-on='light'] { --ink: var(--paper); }
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scrollbar-color: var(--black) var(--paper);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--black);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.35;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+[hidden] { display: none !important; }
+
+/* Tabular figures only where numbers line up: in this face they also widen commas and stops. */
+.count, .rings { font-variant-numeric: tabular-nums; }
+
+::selection { background: var(--black); color: var(--yellow); }
+
+h1, h2, p, ol, ul, figure { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+button:disabled { cursor: default; }
+:focus { outline: none; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.icon { width: 1.2em; height: 1.2em; flex: none; }
+
+/* ── The grid: six columns, hairlines barely there ─────────────────────────── */
+.screen {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: var(--gap);
+  padding: 0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
+  background-color: var(--ground);
+  color: var(--ink);
+}
+.screen::before {
+  content: '';
+  position: absolute;
+  inset: 0 var(--gutter);
+  pointer-events: none;
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--ink) 7%, transparent) 1px, transparent 1px);
+  background-size: calc((100% + var(--gap)) / 6) 100%;
+}
+.screen > * { position: relative; }
+
+/* ── Top line ──────────────────────────────────────────────────────────────── */
+.bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding-top: env(safe-area-inset-top);
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: 0.005em;
+}
+.bar-tools, .plates { display: flex; align-items: center; gap: 16px; }
+
+.lang { display: flex; gap: 4px; min-height: 44px; align-items: center; font-weight: 650; }
+.lang [data-l] { color: color-mix(in srgb, var(--ink) 68%, var(--ground)); }
+.lang[data-lang='en'] [data-l='en'],
+.lang[data-lang='de'] [data-l='de'] { color: var(--ink); font-weight: 850; }
+.lang-sep { color: color-mix(in srgb, var(--ink) 68%, var(--ground)); }
+
+.plate {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.plate--update { color: var(--red); }
+
+/* ── Hub ───────────────────────────────────────────────────────────────────── */
+.hub { --ground: var(--paper); --ink: var(--black); padding-bottom: 32px; align-content: start; }
+.bar-tag { font-weight: 650; }
+
+.hub-head { grid-column: 1 / -1; container-type: inline-size; padding: 4px 0 28px; }
+.mast {
+  font-size: 41cqi;
+  font-weight: 880;
+  line-height: 0.76;
+  letter-spacing: -0.065em;
+  margin-left: -0.045em;
+  padding-bottom: 0.16em;
+}
+.mast span { display: block; }
+.lede {
+  margin-top: 6px;
+  max-width: 20ch;
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 560;
+  text-wrap: balance;
+}
+
+.wall {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+/* Phone: the first poster nearly fills the screen; the rest step down in size. */
+.poster { height: 220px; }
+.poster[data-game='tint'] { grid-column: span 2; height: min(420px, 52dvh); }
+.poster[data-game='glide'] { grid-column: span 2; height: 260px; }
+.poster[data-game='pulse'], .poster[data-game='steady'] { height: 200px; }
+.poster {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--ground);
+  color: var(--ink);
+  text-decoration: none;
+  isolation: isolate;
+}
+.poster:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
+.p-figure { position: absolute; inset: 0; z-index: -1; }
+.p-figure .figure, .figure { display: block; width: 100%; height: 100%; }
+/* The caption under the name: kind and record, set on the poster's own ground. */
+.p-meta {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.p-name {
+  position: absolute;
+  left: 12px;
+  bottom: 36px;
+  font-size: 64px;
+  font-weight: 880;
+  line-height: 0.8;
+  letter-spacing: -0.055em;
+}
+.poster[data-game='tint'] .p-name { font-size: 128px; }
+.poster[data-game='glide'] .p-name { font-size: 88px; }
+/* Keys: the black key slip under the keyboard carries the name, set in paper. */
+.poster[data-game='keys'] { --ink: var(--paper); }
+.poster[data-game='hum'] .p-name, .poster[data-game='keys'] .p-name,
+.poster[data-game='pulse'] .p-name { font-size: 54px; }
+.poster[data-game='steady'] .p-name { font-size: 44px; }
+/* Hover is a state, not an animation: the figure steps aside, hard. */
+@media (hover: hover) {
+  .poster:hover .p-figure { transform: translateX(-12px); }
+}
+.poster:active .p-figure { transform: translateX(-6px); }
+
+.hub-end { grid-column: 1 / -1; margin-top: 28px; }
+.hub-foot {
+  max-width: 36ch;
+  font-size: 14px;
+  font-weight: 560;
+}
+.hub-credits { margin-top: 8px; max-width: 36ch; font-size: 13px; font-weight: 560; color: color-mix(in srgb, var(--ink) 72%, var(--ground)); }
+
+@media (min-width: 640px) {
+  .wall { grid-auto-rows: 200px; }
+  .poster, .poster[data-game] { height: auto; }
+  .poster[data-game='tint'] { grid-column: span 2; grid-row: span 2; }
+  .poster[data-game='glide'] { grid-column: span 2; }
+  .p-name, .poster[data-game] .p-name { font-size: 84px; left: 16px; bottom: 42px; }
+  .poster[data-game='tint'] .p-name { font-size: 168px; }
+  .p-meta { left: 18px; bottom: 16px; font-size: 14px; }
+}
+
+@media (min-width: 1024px) {
+  :root { --gutter: 32px; --gap: 16px; }
+  .hub { grid-template-rows: auto 1fr auto; }
+  .hub-head { grid-column: 1 / 3; grid-row: 2; align-self: start; position: sticky; top: 24px; }
+  .wall {
+    grid-column: 3 / -1;
+    grid-row: 2;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(180px, 26vh);
+    margin-top: 4px;
+  }
+  .poster[data-game='tint'] { grid-column: span 2; grid-row: span 2; }
+  .poster[data-game='glide'] { grid-column: span 2; }
+  .poster[data-game='hum'], .poster[data-game='keys'] { grid-column: span 1; grid-row: span 1; }
+  .poster[data-game='pulse'], .poster[data-game='steady'] { grid-column: span 2; }
+  .poster[data-game='hum'] .p-name, .poster[data-game='keys'] .p-name { font-size: 64px; }
+  .hub-end { grid-column: 1 / 3; grid-row: 3; }
+}
+
+/* ── Game screen ───────────────────────────────────────────────────────────── */
+.play {
+  grid-template-rows: auto auto 1fr auto;
+  align-content: start;
+}
+.home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.bar-title { display: flex; gap: 8px; align-items: baseline; }
+.bar-title span { opacity: 0.8; font-weight: 560; }
+
+.rounds {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: subgrid;
+  column-gap: var(--gap);
+  padding: 6px 0 4px;
+}
+.round { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 50px; font-weight: 650; }
+.round-n {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 800;
+}
+.round[data-state='todo'] .round-n { font-weight: 450; }
+.round[data-state='now'] .round-n { background: var(--ink); color: var(--ground); }
+.round-p { font-size: 14px; padding-left: 2px; }
+
+.stage {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 18px;
+}
+.cue {
+  font-size: clamp(64px, 21vw, 168px);
+  font-weight: 880;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  word-spacing: 0.1em;
+  margin-left: -0.04em;
+  text-wrap: balance;
+}
+.cue--score { font-size: clamp(112px, 38vw, 300px); letter-spacing: -0.06em; padding-bottom: 0.1em; }
+.note {
+  margin-top: 14px;
+  max-width: 34ch;
+  min-height: 1.35em;
+  font-size: 17px;
+  font-weight: 560;
+}
+.fig {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px 0;
+}
+
+.foot {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: var(--gap);
+  padding: 8px 0 max(16px, env(safe-area-inset-bottom));
+  position: sticky;
+  bottom: 0;
+  background: var(--ground);
+}
+.go {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  padding: 0 20px;
+  background: var(--ink);
+  color: var(--ground);
+  font-size: 21px;
+  font-weight: 820;
+  letter-spacing: -0.01em;
+  text-align: left;
+  transition: background-color 120ms linear;
+}
+.go:disabled { background: color-mix(in srgb, var(--ink) 22%, var(--ground)); color: color-mix(in srgb, var(--ink) 70%, var(--ground)); }
+.go:not(:disabled):active { background: color-mix(in srgb, var(--ink) 82%, var(--ground)); }
+.go:focus-visible { outline: 3px solid var(--ground); outline-offset: -8px; }
+/* Long screens: the action follows the result instead of floating over it. */
+.play[data-phase='reveal'] .foot,
+.play[data-phase='summary'] .foot { position: static; }
+.alt {
+  min-height: 64px;
+  padding: 0 4px;
+  font-size: 17px;
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+/* intro */
+.intro-figure { width: 100%; aspect-ratio: 200 / 120; max-height: 36dvh; }
+.intro-figure .figure { width: 100%; height: 100%; }
+.intro-meta { align-self: stretch; display: flex; justify-content: space-between; gap: 16px; font-size: 15px; font-weight: 650; }
+
+/* show: the countdown and the sounding disc */
+.count {
+  align-self: flex-end;
+  font-size: clamp(160px, 52vw, 420px);
+  font-weight: 880;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+}
+.sounding { position: relative; width: min(72vw, 40dvh, 360px); aspect-ratio: 1; }
+.sounding span { position: absolute; border-radius: 50%; border: 3px solid var(--ink); }
+.sounding span:nth-child(1) { inset: 0; border-width: 2px; }
+.sounding span:nth-child(2) { inset: 17%; }
+.sounding span:nth-child(3) { inset: 34%; border-width: 0; background: transparent; }
+.sounding.is-on span:nth-child(3) { background: var(--ink); }
+.sounding.is-on span:nth-child(2) { border-color: var(--accent); border-width: 6px; }
+
+/* ── The ring dial ─────────────────────────────────────────────────────────── */
+.dial {
+  position: relative;
+  width: min(100%, 48dvh, 440px);
+  aspect-ratio: 1;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ring { position: absolute; border-radius: 50%; overflow: hidden; cursor: grab; }
+.ring:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.is-turning, .is-turning .ring { cursor: grabbing; }
+.ring-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(closest-side, transparent var(--hole), #000 calc(var(--hole) + 0.6px));
+  mask: radial-gradient(closest-side, transparent var(--hole), #000 calc(var(--hole) + 0.6px));
+}
+.dial-index {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 3px;
+  transform: translateX(-50%);
+  background: var(--ink);
+  pointer-events: none;
+}
+/* The notch: a solid ink triangle just outside the dial, pointing at the reading. */
+.dial-index::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  margin-left: -11px;
+  border: 11px solid transparent;
+  border-top: 14px solid var(--ink);
+  border-bottom: 0;
+}
+.dial-hub { position: absolute; display: grid; place-items: center; border-radius: 50%; }
+.dial-play {
+  display: grid;
+  place-items: center;
+  width: 66%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--ground);
+}
+.dial-play .icon { width: 42%; height: 42%; }
+
+.beat-dot {
+  display: block;
+  width: 56%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+}
+.beat-dot.is-on { background: var(--ink); }
+.beat-dot.is-on.is-down { background: var(--accent); border-color: var(--accent); }
+.pulse-show { width: min(60vw, 34dvh, 300px); display: grid; place-items: center; aspect-ratio: 1; }
+.pulse-show .beat-dot { width: 100%; }
+
+/* ── Hum ───────────────────────────────────────────────────────────────────── */
+.hum-live { width: min(100%, 44dvh, 380px); }
+.hum-ring { display: block; width: 100%; overflow: visible; }
+.hum-track { fill: none; stroke: color-mix(in srgb, var(--ink) 20%, transparent); stroke-width: 14; }
+.hum-hold { fill: none; stroke: var(--ink); stroke-width: 14; }
+.hum-dot { fill: var(--ink); stroke: var(--ground); stroke-width: 4; opacity: 0; }
+.hum-ring.is-live .hum-dot { opacity: 1; }
+
+/* ── Keys ──────────────────────────────────────────────────────────────────── */
+.kbs { width: 100%; max-width: 1080px; display: flex; flex-direction: column; gap: 10px; }
+.kbs--rows { gap: 12px; }
+.kb {
+  --kb-black: calc(100% / var(--kb-whites) * 0.62);
+  position: relative;
+  width: 100%;
+  height: min(42dvh, 300px);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.kb-whites { display: flex; height: 100%; }
+.kb-key {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  background: var(--paper);
+  color: var(--black);
+  border: 2px solid var(--black);
+  margin-left: -2px;
+  font-size: 12px;
+  font-weight: 750;
+}
+.kb-key:first-child { margin-left: 0; }
+.kb-blacks { position: absolute; inset: 0 0 auto; height: 60%; pointer-events: none; }
+.kb-key--black {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--kb-black);
+  background: var(--black);
+  color: var(--paper);
+  border: 0;
+  margin: 0;
+  pointer-events: auto;
+}
+.kb-key[aria-pressed='true'] { background: var(--red); color: var(--paper); }
+.kb-key[aria-pressed='true']::after,
+.kb-key.is-yours::after {
+  content: '';
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.kb-key.is-target { background: var(--blue); color: var(--paper); }
+.kb-key.is-yours:not(.is-target) { background: var(--red); color: var(--paper); }
+.kb-key:focus-visible { outline: 3px solid var(--blue); outline-offset: -6px; z-index: 1; }
+.kb-mark { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; font-weight: 750; color: var(--ink); }
+
+/* ── Reveal and summary ────────────────────────────────────────────────────── */
+.compare { width: 100%; display: flex; flex-direction: column; gap: 20px; }
+.swatches { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.swatch { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 12px; }
+.swatch figcaption { display: flex; flex-direction: column; font-size: 15px; font-weight: 560; }
+.swatch figcaption b { font-size: 22px; font-weight: 850; letter-spacing: -0.02em; }
+.swatch figcaption[data-on='dark'] { color: var(--black); }
+.swatch figcaption[data-on='light'] { color: var(--paper); }
+
+.replays { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.replay {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+  justify-items: start;
+  min-height: 72px;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--ink) 12%, var(--ground));
+  text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.replay .icon { grid-row: span 2; width: 26px; height: 26px; }
+.replay-t { font-size: 14px; font-weight: 650; }
+.replay-v { font-size: 20px; font-weight: 850; letter-spacing: -0.02em; }
+.replay:active { background: color-mix(in srgb, var(--ink) 22%, var(--ground)); }
+.replay .beat-dot { position: absolute; right: 14px; top: 50%; width: 18px; margin-top: -9px; border-width: 2px; }
+
+.rings-box { width: min(100%, 300px); align-self: center; }
+.rings { display: block; width: 100%; overflow: visible; font-family: var(--font); }
+.rings-line { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+.rings-axis { stroke: var(--ink); stroke-width: 0.8; stroke-dasharray: 2 3; opacity: 0.55; }
+.rings-bull { fill: var(--ink); }
+.rings-num { fill: var(--ink); font-size: 7px; font-weight: 700; }
+.rings-word { fill: var(--ink); font-size: 7.5px; font-weight: 700; }
+.rings-dot { fill: var(--ink); stroke: var(--ground); stroke-width: 2; }
+.rings-n {
+  fill: var(--ground);
+  font-size: 9.5px;
+  font-weight: 850;
+}
+.play--tint .rings-n { fill: var(--paper); paint-order: stroke; stroke: var(--black); stroke-width: 2.4px; }
+
+.tally { display: flex; flex-direction: column; gap: 10px; max-width: 520px; font-size: 16px; }
+.tally li { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; }
+.tally-n { font-weight: 850; }
+.tally-pair { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 560; }
+.tally-vs { opacity: 0.6; }
+.tally-p { font-weight: 850; font-size: 20px; }
+.chip { display: inline-block; width: 18px; height: 18px; border-radius: 50%; }
+
+/* ── Game screen, wide: rounds in the margin column, words beside the figure ─ */
+@media (min-width: 960px) {
+  .play {
+    grid-template-columns: minmax(96px, 1fr) repeat(5, minmax(0, 1fr));
+    grid-template-rows: auto 1fr auto;
+  }
+  .play .bar { grid-column: 1 / -1; }
+  .rounds {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    grid-template-columns: none;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: min-content;
+    align-content: start;
+    gap: 18px;
+    padding-top: 28px;
+  }
+  .round { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .round-n { width: 44px; height: 44px; font-size: 24px; }
+  .round-p { font-size: 16px; padding-left: 4px; }
+  .stage {
+    grid-column: 2 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: 32px;
+    padding-top: 28px;
+    align-items: start;
+  }
+  .cue { font-size: clamp(88px, 9vw, 168px); }
+  .cue--score { font-size: clamp(140px, 15vw, 280px); }
+  .note { font-size: 19px; }
+  .fig { align-self: stretch; padding: 0 0 24px; }
+  .dial { width: min(100%, 62dvh, 560px); }
+  .foot { grid-column: 2 / -1; position: static; }
+  .go { flex: 0 1 420px; margin-left: auto; }
+  /* Reveal and summary: score and rings on the left, the comparison large on the right. */
+  .play[data-phase='summary'] .stage,
+  .play[data-phase='reveal'] .stage { grid-template-rows: auto 1fr; }
+  .play[data-phase='summary'] .fig,
+  .play[data-phase='reveal'] .fig { display: contents; }
+  .play[data-phase='summary'] .compare,
+  .play[data-phase='reveal'] .compare { grid-column: 2; grid-row: 1 / 3; align-self: start; padding-top: 12px; }
+  .play[data-phase='summary'] .rings-box,
+  .play[data-phase='reveal'] .rings-box { grid-column: 1; grid-row: 2; align-self: start; justify-self: start; margin-top: 28px; width: min(100%, 320px); }
+  .play--tint[data-phase='reveal'] .compare { align-self: stretch; padding: 0 0 24px; }
+  .play--tint[data-phase='reveal'] .swatches { height: 100%; min-height: 52dvh; }
+  .play--tint[data-phase='reveal'] .swatch { aspect-ratio: auto; padding: 20px; }
+  .play--tint[data-phase='reveal'] .swatch figcaption b { font-size: 34px; }
+  /* Keys: three octaves want the whole stage width, under the cue. */
+  .play--keys[data-phase='make'] .fig { grid-column: 1 / -1; padding-top: 32px; justify-content: flex-start; }
+  .play[data-phase='intro'] .stage { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+  .play[data-phase='intro'] .cue { font-size: clamp(120px, 15vw, 260px); }
+  .intro-figure { max-height: 46dvh; }
+}
+
+
+
+/* ── Sound picker (beat games' intro) ──────────────────────────────────────── */
+.voices { align-self: stretch; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.voices-label { margin-right: 6px; font-size: 15px; font-weight: 650; }
+.voice {
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 16px;
+  font-weight: 750;
+}
+.voice[aria-pressed='true'] { background: var(--ink); color: var(--ground); }
+
+/* ── Strips: Tint's control on narrow screens ──────────────────────────────── */
+.strips { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+.strip { display: flex; flex-direction: column; gap: 6px; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; }
+.strip-label { font-size: 14px; font-weight: 700; }
+.strip-track { position: relative; display: block; height: 40px; margin: 0 2px; }
+.strip-face { position: absolute; inset: 0; }
+/* The notch: an ink triangle above the band and a hairline through it. */
+.strip-notch { position: absolute; top: -2px; bottom: -2px; width: 3px; margin-left: -1.5px; background: var(--ink); pointer-events: none; }
+.strip-notch::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  margin-left: -9px;
+  border: 9px solid transparent;
+  border-top: 11px solid var(--ink);
+  border-bottom: 0;
+}
+.strip:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+.play--tint[data-phase='make'] .fig { justify-content: flex-end; }
+
+/* ── Steady ────────────────────────────────────────────────────────────────── */
+.tap-pad {
+  display: grid;
+  place-items: center;
+  width: min(66vw, 38dvh, 340px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--ground);
+  font-size: 28px;
+  font-weight: 850;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tap-pad.is-on { background: var(--accent); color: var(--ink); }
+.pips { display: flex; gap: 10px; }
+.pip { width: 14px; height: 14px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 30%, var(--ground)); }
+.pip.is-on { background: var(--ink); }
+.drift-box { width: 100%; }
+.drift { display: block; width: 100%; overflow: visible; font-family: var(--font); }
+.drift-line { stroke: var(--ink); stroke-width: 1.5; }
+.drift-tick { stroke: var(--ink); stroke-width: 1.5; }
+.drift-stem { stroke: var(--ink); stroke-width: 2; }
+.drift-dot { fill: var(--ink); }
+.drift-miss { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 3 3; }
+.drift-word { fill: var(--ink); font-size: 11px; font-weight: 700; }
+
+/* ── Phones: score and rings side by side, so a reveal fits one screen ────── */
+@media (max-width: 959px) {
+  .play[data-phase='reveal'] .stage,
+  .play[data-phase='summary'] .stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    column-gap: var(--gap);
+    align-items: start;
+  }
+  .play[data-phase='reveal'] .fig,
+  .play[data-phase='summary'] .fig { display: contents; }
+  .play[data-phase='reveal'] .rings-box,
+  .play[data-phase='summary'] .rings-box { grid-column: 2; grid-row: 1; width: 132px; }
+  .play[data-phase='reveal'] .compare,
+  .play[data-phase='summary'] .compare { grid-column: 1 / -1; grid-row: 2; margin: 18px 0 16px; }
+  .play[data-phase='reveal'] .cue--score,
+  .play[data-phase='summary'] .cue--score { font-size: clamp(80px, 23vw, 150px); }
+  .play[data-phase='reveal'] .note,
+  .play[data-phase='summary'] .note { font-size: 16px; }
+  /* Small rings: bigger markers, no ring numbers. */
+  .play .rings-box .rings-num { display: none; }
+  .play .rings-box .rings-dot { r: 13px; }
+  .play .rings-box .rings-n { font-size: 15px; }
+  .play .rings-box .rings-word { font-size: 13px; }
+  .compare .kb { height: 150px; }
+  /* Phones: the three octaves take all the height the screen has left. */
+  .play--keys[data-phase='make'] .cue { font-size: clamp(48px, 14vw, 72px); }
+  .play--keys[data-phase='make'] .fig { justify-content: stretch; align-items: stretch; padding: 16px 0 12px; }
+  .play--keys[data-phase='make'] .kbs--rows { flex: 1; }
+  .play--keys[data-phase='make'] .kbs--rows .kb { flex: 1; height: auto; min-height: 110px; }
+  /* And on the reveal: the comparison keyboard fills what the score row leaves. */
+  .play--keys[data-phase='reveal'] .stage { grid-template-rows: auto 1fr; }
+  .play--keys[data-phase='reveal'] .compare { align-self: stretch; }
+  .play--keys[data-phase='reveal'] .kbs--rows { flex: 1; }
+  .play--keys[data-phase='reveal'] .kbs--rows .kb { flex: 1; height: auto; min-height: 66px; }
+  .compare .kbs--rows { gap: 24px; }
+  .compare .kbs--rows .kb { height: 66px; }
+  .compare .kbs--rows .kb-key { padding-bottom: 3px; font-size: 10px; }
+  .compare .kb-mark { font-size: 11px; }
+}

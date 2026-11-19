@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T12:00:00Z",
+  "title": "Design System: Nearly",
+  "extensions": {
+    "colorMeta": {
+      "paper":  { "role": "neutral",   "displayName": "Poster Paper",  "canonical": "oklch(96.0% 0.005 106.5)", "tonalRamp": ["#0b0b0b","#262625","#454543","#666664","#898987","#aeaeab","#d1d1ce","#eeeeed"] },
+      "black":  { "role": "neutral",   "displayName": "Press Black",   "canonical": "oklch(17.8% 0 0)",         "tonalRamp": ["#0b0b0b","#262626","#454545","#666666","#898989","#aeaeae","#d1d1d1","#eeeeee"] },
+      "red":    { "role": "primary",   "displayName": "Signal Red",    "canonical": "oklch(55.6% 0.201 29.0)",  "tonalRamp": ["#1f0000","#5b0000","#8a0000","#bb1d16","#e44f41","#ff806f","#ffaa99","#ffdfd6"] },
+      "blue":   { "role": "secondary", "displayName": "Ultramarine",   "canonical": "oklch(43.8% 0.202 266.3)", "tonalRamp": ["#02062a","#070978","#1631aa","#3359d0","#5a82ed","#83aaff","#abcfff","#deeeff"] },
+      "yellow": { "role": "tertiary",  "displayName": "Chrome Yellow", "canonical": "oklch(83.3% 0.170 90.6)",  "tonalRamp": ["#100a00","#362300","#5a4100","#806200","#a98400","#d4a800","#facb2c","#ffedb4"] }
+    },
+    "inkPairs": [
+      { "ink": "red",    "ground": "#cf2b21", "text": "#f2f2ee", "accent": "#f2c200", "contrast": "4.65:1" },
+      { "ink": "blue",   "ground": "#1f3fbf", "text": "#f2f2ee", "accent": "#f2c200", "contrast": "7.42:1" },
+      { "ink": "yellow", "ground": "#f2c200", "text": "#111111", "accent": "#cf2b21", "contrast": "11.23:1" },
+      { "ink": "black",  "ground": "#111111", "text": "#f2f2ee", "accent": "#cf2b21", "contrast": "16.82:1" },
+      { "ink": "paper",  "ground": "#f2f2ee", "text": "#111111", "accent": "#cf2b21", "contrast": "16.82:1" }
+    ],
+    "typographyMeta": {
+      "display":  { "displayName": "Masthead", "purpose": "The Nearly masthead only, broken Near / ly, sized to its column (41cqi)." },
+      "count":    { "displayName": "Count", "purpose": "The show-phase countdown; tabular figures." },
+      "score":    { "displayName": "Score", "purpose": "Round and final score; 140-280px from 960px." },
+      "headline": { "displayName": "Cue", "purpose": "The phase cue on the game screen; 88-168px from 960px." },
+      "title":    { "displayName": "Poster Name", "purpose": "Game name on its poster, bottom left; 84px from 640px, Tint 128-168px, Hum/Keys 54px on phone." },
+      "action":   { "displayName": "Action", "purpose": "Label of the one main action per screen." },
+      "lede":     { "displayName": "Lede", "purpose": "The line under the masthead, max 20ch, balanced." },
+      "body":     { "displayName": "Body", "purpose": "Notes and game rules, max 34ch; 19px from 960px." },
+      "label":    { "displayName": "Label", "purpose": "Top line, round points, tally, replay titles." },
+      "caption":  { "displayName": "Poster Caption", "purpose": "Kind · record under the poster name, no plate; 14px from 640px." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "cut", "value": "none", "purpose": "Phases and routes change as hard cuts in fixed order; no fades or slides." },
+      { "name": "marker-travel", "value": "900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms", "purpose": "The one authored motion: a result marker travels from outside the rings to its place. Placed directly under prefers-reduced-motion." },
+      { "name": "figure-step", "value": "translateX(-12px) hover / translateX(-6px) press, no transition", "purpose": "Poster hover and press state: the figure steps aside, hard." },
+      { "name": "press-fill", "value": "background-color 120ms linear", "purpose": "The action bar's fill change on press." }
+    ],
+    "focus": [
+      { "name": "default", "value": "outline: 3px solid var(--ink); outline-offset: 3px", "purpose": ":focus-visible only; focus moves programmatically only after keyboard input." },
+      { "name": "action", "value": "outline: 3px solid var(--ground); outline-offset: -8px", "purpose": "Inset ring inside the action bar." },
+      { "name": "ring", "value": "outline: 3px solid var(--ink); outline-offset: 2px", "purpose": "A focused dial ring." },
+      { "name": "piano-key", "value": "outline: 3px solid #1f3fbf; outline-offset: -6px", "purpose": "A focused key in Keys." }
+    ],
+    "grid": { "columns": 6, "hairline": "1px, current ink at 7%", "gutter": "16px / 32px from 1024px", "gap": "8px / 16px from 1024px" },
+    "breakpoints": [
+      { "name": "wall", "value": "640px" },
+      { "name": "game-wide", "value": "960px" },
+      { "name": "hub-wide", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Action",
+      "kind": "button",
+      "refersTo": "action",
+      "description": "The one main action per screen: an inverted ink bar, label left, arrow right.",
+      "html": "<div class=\"ds-ground\"><button class=\"ds-action\">Nächste Runde <svg viewBox=\"0 0 24 24\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></button><button class=\"ds-action\" disabled>Festlegen <svg viewBox=\"0 0 24 24\" width=\"26\" height=\"26\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></button></div>",
+      "css": ".ds-ground { --ground: #f2f2ee; --ink: #111111; background: var(--ground); padding: 16px; display: grid; gap: 8px; font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ds-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 0 20px; border: 0; border-radius: 0; background: var(--ink); color: var(--ground); font: inherit; font-size: 21px; font-weight: 820; letter-spacing: -0.01em; text-align: left; cursor: pointer; transition: background-color 120ms linear; } .ds-action:not(:disabled):active { background: color-mix(in srgb, var(--ink) 82%, var(--ground)); } .ds-action:disabled { cursor: default; background: color-mix(in srgb, var(--ink) 22%, var(--ground)); color: color-mix(in srgb, var(--ink) 70%, var(--ground)); } .ds-action:focus { outline: none; } .ds-action:focus-visible { outline: 3px solid var(--ground); outline-offset: -8px; }"
+    },
+    {
+      "name": "Text Plate",
+      "kind": "button",
+      "refersTo": "text-plate",
+      "description": "Secondary actions as bold underlined words, no fill; the update plate is red.",
+      "html": "<div class=\"ds-plates\"><a class=\"ds-plate\" href=\"#\">Alle Spiele</a><a class=\"ds-plate ds-plate--update\" href=\"#\">Aktualisieren</a></div>",
+      "css": ".ds-plates { display: flex; gap: 16px; padding: 16px; background: #f2f2ee; color: #111111; font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ds-plate { display: inline-flex; align-items: center; min-height: 44px; color: inherit; font-size: 17px; font-weight: 750; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; } .ds-plate--update { color: #cf2b21; } .ds-plate:focus { outline: none; } .ds-plate:focus-visible { outline: 3px solid #111111; outline-offset: 3px; }"
+    },
+    {
+      "name": "Top Line",
+      "kind": "nav",
+      "refersTo": "text-plate",
+      "description": "The thin top line: back to Nearly on the left, game name and kind on the right.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-home\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 12H5M11 6l-6 6 6 6\"/></svg>Nearly</a><span class=\"ds-title\">Glide <span>Tonhöhe</span></span></header>",
+      "css": ".ds-bar { --ground: #1f3fbf; --ink: #f2f2ee; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 0 16px; background: var(--ground); color: var(--ink); font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 650; letter-spacing: 0.005em; } .ds-home { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: inherit; font-weight: 800; text-decoration: none; } .ds-home:focus { outline: none; } .ds-home:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; } .ds-title { display: flex; gap: 8px; align-items: baseline; font-weight: 800; } .ds-title span { opacity: 0.8; font-weight: 560; }"
+    },
+    {
+      "name": "Poster",
+      "kind": "card",
+      "refersTo": "poster-blue",
+      "description": "A game on the wall: one ink field, circle figure underneath, name and caption printed bottom-left with no plate.",
+      "html": "<a class=\"ds-poster\" href=\"#\"><svg class=\"ds-poster-fig\" viewBox=\"0 0 400 260\" preserveAspectRatio=\"xMidYMid slice\" aria-hidden=\"true\"><circle cx=\"420\" cy=\"300\" r=\"230\" fill=\"none\" stroke=\"#f2f2ee\" stroke-width=\"26\"/><circle cx=\"420\" cy=\"300\" r=\"170\" fill=\"none\" stroke=\"#f2c200\" stroke-width=\"14\"/><circle cx=\"250\" cy=\"70\" r=\"20\" fill=\"#f2c200\"/></svg><span class=\"ds-poster-name\">Glide</span><span class=\"ds-poster-meta\">Tonhöhe · Rekord 23,4</span></a>",
+      "css": ".ds-poster { position: relative; display: block; width: 100%; height: 260px; overflow: hidden; isolation: isolate; background: #1f3fbf; color: #f2f2ee; text-decoration: none; font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ds-poster-fig { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; } .ds-poster-name { position: absolute; left: 12px; bottom: 36px; font-size: 88px; font-weight: 880; line-height: 0.8; letter-spacing: -0.055em; } .ds-poster-meta { position: absolute; left: 14px; bottom: 12px; font-size: 13px; font-weight: 700; } .ds-poster:hover .ds-poster-fig { transform: translateX(-12px); } .ds-poster:active .ds-poster-fig { transform: translateX(-6px); } .ds-poster:focus { outline: none; } .ds-poster:focus-visible { outline: 3px solid #111111; outline-offset: 3px; }"
+    },
+    {
+      "name": "Rounds",
+      "kind": "custom",
+      "refersTo": "round-now",
+      "description": "Rounds as circled numbers with points beneath; the current round is a solid ink disc.",
+      "html": "<ol class=\"ds-rounds\"><li class=\"ds-round\"><span class=\"ds-round-n\">1</span><span class=\"ds-round-p\">0,5</span></li><li class=\"ds-round ds-round--now\"><span class=\"ds-round-n\">2</span></li></ol>",
+      "css": ".ds-rounds { --ground: #f2f2ee; --ink: #111111; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 8px; margin: 0; padding: 6px 16px 4px; list-style: none; background: var(--ground); color: var(--ink); font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ds-round { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 50px; font-weight: 650; } .ds-round-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-size: 17px; font-weight: 800; } .ds-round--now .ds-round-n { background: var(--ink); color: var(--ground); } .ds-round-p { font-size: 14px; padding-left: 2px; }"
+    },
+    {
+      "name": "Ring Dial",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature control: a ring turned around its centre under a fixed index at twelve o'clock; the hole holds a play disc.",
+      "html": "<div class=\"ds-dialwrap\"><div class=\"ds-dial\"><span class=\"ds-ring\" role=\"slider\" tabindex=\"0\" aria-label=\"Tonhöhe\"><span class=\"ds-ring-face\"></span></span><span class=\"ds-index\"></span><span class=\"ds-hub\"><span class=\"ds-play\"><svg viewBox=\"0 0 24 24\" width=\"40%\" height=\"40%\" fill=\"currentColor\"><path d=\"M4 9h4l5-4v14l-5-4H4z\"/><path d=\"M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></span></span></div></div>",
+      "css": ".ds-dialwrap { --ground: #1f3fbf; --ink: #f2f2ee; background: var(--ground); color: var(--ink); padding: 40px 24px 24px; } .ds-dial { position: relative; width: min(100%, 280px); aspect-ratio: 1; margin: 0 auto; } .ds-ring { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; cursor: grab; } .ds-ring:focus { outline: none; } .ds-ring:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; } .ds-ring-face { position: absolute; inset: 0; border-radius: 50%; background: repeating-conic-gradient(from -0.8deg, var(--ink) 0 1.6deg, transparent 1.6deg 15deg), color-mix(in srgb, var(--ink) 16%, transparent); -webkit-mask: radial-gradient(closest-side, transparent 70%, #000 calc(70% + 0.6px)); mask: radial-gradient(closest-side, transparent 70%, #000 calc(70% + 0.6px)); transform: rotate(-40deg); } .ds-index { position: absolute; left: 50%; top: -14px; width: 3px; height: calc(15% + 14px); transform: translateX(-50%); background: var(--ink); } .ds-index::before { content: ''; position: absolute; top: -12px; left: 50%; margin-left: -11px; border: 11px solid transparent; border-top: 14px solid var(--ink); border-bottom: 0; } .ds-hub { position: absolute; inset: 17%; display: grid; place-items: center; border-radius: 50%; } .ds-play { display: grid; place-items: center; width: 66%; aspect-ratio: 1; border-radius: 50%; background: var(--ink); color: var(--ground); }"
+    },
+    {
+      "name": "Result Rings",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature diagram: target at the centre, each answer at its true distance; markers travel in on reveal.",
+      "html": "<div class=\"ds-ringsbox\"><svg class=\"ds-rings\" viewBox=\"-104 -118 208 236\" role=\"img\" aria-label=\"Result rings\"><circle class=\"l\" r=\"18\"/><circle class=\"l\" r=\"36\"/><circle class=\"l\" r=\"54\"/><circle class=\"l\" r=\"72\"/><circle class=\"l\" r=\"90\"/><text class=\"n\" x=\"16\" y=\"-2\" text-anchor=\"end\">8</text><text class=\"n\" x=\"34\" y=\"-2\" text-anchor=\"end\">6</text><text class=\"n\" x=\"52\" y=\"-2\" text-anchor=\"end\">4</text><text class=\"n\" x=\"70\" y=\"-2\" text-anchor=\"end\">2</text><line class=\"a\" x1=\"0\" y1=\"-90\" x2=\"0\" y2=\"90\"/><circle class=\"b\" r=\"3.5\"/><text class=\"w\" x=\"0\" y=\"-104\" text-anchor=\"middle\">zu hoch</text><text class=\"w\" x=\"0\" y=\"110\" text-anchor=\"middle\">zu tief</text><g class=\"m\"><circle class=\"d\" r=\"8.5\"/><text class=\"t\" y=\"3.6\" text-anchor=\"middle\">1</text></g></svg></div>",
+      "css": ".ds-ringsbox { --ground: #1f3fbf; --ink: #f2f2ee; background: var(--ground); padding: 16px; } .ds-rings { display: block; width: min(100%, 300px); margin: 0 auto; overflow: visible; font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-variant-numeric: tabular-nums; } .ds-rings .l { fill: none; stroke: var(--ink); stroke-width: 1.2; } .ds-rings .a { stroke: var(--ink); stroke-width: 0.8; stroke-dasharray: 2 3; opacity: 0.55; } .ds-rings .b { fill: var(--ink); } .ds-rings .n { fill: var(--ink); font-size: 7px; font-weight: 700; } .ds-rings .w { fill: var(--ink); font-size: 7.5px; font-weight: 700; } .ds-rings .d { fill: var(--ink); stroke: var(--ground); stroke-width: 2; } .ds-rings .t { fill: var(--ground); font-size: 9.5px; font-weight: 850; } .ds-rings .m { animation: ds-travel 900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both; } @keyframes ds-travel { from { transform: translate(84px, -84px); } to { transform: translate(38px, -38px); } } @media (prefers-reduced-motion: reduce) { .ds-rings .m { animation: none; transform: translate(38px, -38px); } }"
+    },
+    {
+      "name": "Swatch Pair",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Tint's reveal: target and answer as two flat fields, label bottom-left, no frame.",
+      "html": "<div class=\"ds-swatches\"><figure class=\"ds-swatch\" style=\"background:#fd7aa1\"><figcaption class=\"dark\"><b>Vorgabe</b>#FD7AA1</figcaption></figure><figure class=\"ds-swatch\" style=\"background:#2b307b\"><figcaption class=\"light\"><b>Deins</b>#2B307B</figcaption></figure></div>",
+      "css": ".ds-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 16px; background: #f2f2ee; font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ds-swatch { margin: 0; aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 12px; } .ds-swatch figcaption { display: flex; flex-direction: column; font-size: 15px; font-weight: 560; } .ds-swatch figcaption b { font-size: 22px; font-weight: 850; letter-spacing: -0.02em; } .ds-swatch .dark { color: #111111; } .ds-swatch .light { color: #f2f2ee; }"
+    },
+    {
+      "name": "Piano Keyboard",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Keys' instrument, the one drawn rectangle: paper keys with 2px black edges; the answer red, the target blue.",
+      "html": "<div class=\"ds-kb\"><span class=\"ds-key\">C</span><span class=\"ds-key ds-key--target\">D</span><span class=\"ds-key ds-key--yours\">E</span><span class=\"ds-key\">F</span><span class=\"ds-key\">G</span><span class=\"ds-black\" style=\"left:13.8%\"></span><span class=\"ds-black\" style=\"left:33.8%\"></span><span class=\"ds-black\" style=\"left:73.8%\"></span></div>",
+      "css": ".ds-kb { position: relative; display: flex; height: 180px; margin: 16px; font-family: 'Schibsted Grotesk Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif; } .ds-key { position: relative; flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; margin-left: -2px; background: #f2f2ee; color: #111111; border: 2px solid #111111; font-size: 12px; font-weight: 750; } .ds-key:first-child { margin-left: 0; } .ds-key--target { background: #1f3fbf; color: #f2f2ee; } .ds-key--yours { background: #cf2b21; color: #f2f2ee; } .ds-key--target::after, .ds-key--yours::after { content: ''; position: absolute; bottom: 30px; left: 50%; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: currentColor; } .ds-black { position: absolute; top: 0; width: 12.4%; height: 60%; background: #111111; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Concert Poster Wall",
+    "overview": "Nearly is a wall of Zurich concert posters. Each game is a poster: one flat offset ink as its ground, one heavy grotesk set flush left at wall scale, and circles as the only figures. Inside a game the screen itself becomes that poster: the whole viewport takes the game's ink, and the thing you perceive is drawn as flat geometry on a six-column grid whose hairlines stay faintly visible behind everything.\n\nNothing is boxed. There are no cards, no outlines, no rounded rectangles and no shadows; hierarchy comes only from scale, weight and grid position. Type does the structural work: a masthead at 41% of its column width, game cues at up to 168px, a final score at up to 300px, all at weight 880 with tight negative tracking and line heights under 0.85. Everything else is small, bold and quiet.\n\nTime behaves like print. Phases change as hard cuts in a fixed order (intro, show, recreate, reveal, summary) with no fades or slides between them. The single authored motion in the whole product is the reveal: the answer marker travels in from outside the result rings and settles at its true distance from the target.",
+    "keyCharacteristics": [
+      "Five inks only: poster paper, black, signal red, ultramarine, chrome yellow.",
+      "Every surface is one solid ink field; text is that field's ink.",
+      "One variable grotesk (Schibsted Grotesk), weights 560 to 880, flush left.",
+      "Circles and arcs are the only figures; the piano keyboard is the single drawn instrument.",
+      "A visible six-column grid in 7% ink hairlines.",
+      "Hard cuts between phases; one travelling marker on the result rings."
+    ],
+    "rules": [
+      { "name": "The Ground-and-Ink Rule", "body": "Every surface declares one ink pair: red, blue and black grounds carry paper ink with a yellow accent (red accent on black); yellow and paper grounds carry black ink with a red accent. Components read only the current ground, ink and accent, never a fixed hue, so any game can take any ink.", "section": "colors" },
+      { "name": "The Five Inks Rule", "body": "No sixth colour enters the interface. Lighter and darker states are mixes of the current ink into the current ground (pressed action 82%, disabled action 22% fill with 70% label, replay plate 12%, pressed plate 22%), never a new hue. The only exceptions are game content itself: Tint's target and answer colours.", "section": "colors" },
+      { "name": "The Paper-on-Red Rule", "body": "Red stays at its recorded value because paper text on it must pass 4.5:1. Yellow on red (3.11:1) is for figures only, never for text.", "section": "colors" },
+      { "name": "The Flush-Left Rule", "body": "All type is set flush left from the grid. Wall-scale words take a negative optical margin (-0.04 to -0.045em) so the letterform touches the column line.", "section": "typography" },
+      { "name": "The Counted-Figures Rule", "body": "Tabular figures are on only for the countdown and the result rings, where numbers must hold position. Everywhere else figures stay proportional, because in this face tabular setting widens the decimal comma.", "section": "typography" },
+      { "name": "The Visible Grid Rule", "body": "The six-column hairlines are part of the poster, not scaffolding: keep them on every screen at 7% of the ink.", "section": "layout" },
+      { "name": "The Margin Column Rule", "body": "From 960px the round sequence lives only in column one; nothing else enters it.", "section": "layout" },
+      { "name": "The Flat Wall Rule", "body": "Nothing lifts. Hover and press move the figure sideways, hard (12px on hover, 6px on press, no transition); they never raise, scale or shadow anything.", "section": "elevation" },
+      { "name": "The Circles-Only Rule", "body": "Figures are circles and arcs; nothing else is drawn. The single exception is the piano keyboard, drawn as the instrument itself: paper keys with 2px black edges, black keys at 62% of a white key's width and 60% of the height.", "section": "shapes" },
+      { "name": "The No-Box Rule", "body": "No cards, outlines, radii on rectangles or containers with borders. If something needs grouping, give it its own ink field or put it on the grid.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do give every surface one ink pair from the five inks and let components read ground, ink and accent from it.",
+      "Do set big words at weight 880 with -0.055 to -0.065em tracking and a line height under 0.85, flush left on the grid.",
+      "Do draw every figure as circles, rings or arcs, in flat ink.",
+      "Do keep the six-column hairlines visible at 7% of the ink on every screen.",
+      "Do change phases as hard cuts; the only authored motion is the result marker travelling onto the rings (900ms, cubic-bezier(0.16, 1, 0.3, 1)).",
+      "Do print a poster's caption (kind · record) directly under the name, on the poster's own ground.",
+      "Do keep tabular figures to the countdown and the result rings.",
+      "Do show focus rings only after keyboard use, and make every dial work with arrows and Page Up/Down."
+    ],
+    "donts": [
+      "Don't use cards, outlines, rounded rectangles or shadows.",
+      "Don't put a plate, chip or background behind poster captions or names.",
+      "Don't fade, slide or scale between phases or screens.",
+      "Don't introduce a sixth colour or a gradient into the interface.",
+      "Don't set text in yellow on red.",
+      "Don't switch tabular figures on for running text or scores in prose; they widen the comma."
+    ]
+  }
+}
